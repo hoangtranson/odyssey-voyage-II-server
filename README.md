@@ -85,3 +85,20 @@ rover subgraph publish Airlock-Voyage-dxg8yk@current \
 rover dev --supergraph-config ./router/supergraph-config.yaml \
    --router-config ./router/router-config.yaml
 ```
+
+GraphQL Variant
+
+```
+rover subgraph publish airlock-managed-fed@staging \
+  --schema "accounts.graphql" \
+  --name accounts \
+  --routing-url "https://staging-airlock-accounts.com"
+```
+
+Schema check
+
+```
+rover subgraph check <GRAPH_REF> \
+  --schema <SCHEMA_FILE_PATH> \
+  --name <SUBGRAPH_NAME>
+```
