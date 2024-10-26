@@ -1,3 +1,4 @@
+const { id } = require("date-fns/locale");
 const { AuthenticationError, ForbiddenError } = require("./utils/errors");
 
 const resolvers = {
@@ -52,7 +53,7 @@ const resolvers = {
       }
     },
     listing: (_, { id }, { dataSources }) => {
-      return dataSources.listingsAPI.getListing(id);
+      return {id};
     },
     featuredListings: (_, __, { dataSources }) => {
       const limit = 3;
@@ -382,7 +383,7 @@ const resolvers = {
   },
   Listing: {
     host: ({ hostId }, _, { dataSources }) => {
-      return dataSources.accountsAPI.getUser(hostId);
+      return {id : hostId};
     },
     overallRating: ({ id }, _, { dataSources }) => {
       return dataSources.reviewsDb.getOverallRatingForListing(id);
@@ -426,7 +427,7 @@ const resolvers = {
       return dataSources.bookingsDb.getHumanReadableDate(checkOutDate);
     },
     guest: ({ guestId }, _, { dataSources }) => {
-      return dataSources.accountsAPI.getUser(guestId);
+      return {id: guestId};
     },
     totalPrice: async (
       { listingId, checkInDate, checkOutDate },
@@ -451,8 +452,14 @@ const resolvers = {
     },
   },
   Review: {
-    author: ({ authorId }, _, { dataSources }) => {
-      return dataSources.accountsAPI.getUser(authorId);
+    author: (review) => {
+      let role = '';
+      if (review.targetType === 'LISTING' || review.targetType === 'HOST') {
+        role = 'Guest';
+      } else {
+        role = 'Host';
+      }
+      return { id: review.authorId, role };
     },
   },
   AmenityCategory: {

@@ -71,3 +71,17 @@ curl -sSL https://router.apollo.dev/download/nix/v1.46.0 | sh
 ```
 APOLLO_KEY=service:Airlock-Voyage-dxg8yk:emH5MPuGKpL7ZyJ-qnBaYA APOLLO_GRAPH_REF=Airlock-Voyage-dxg8yk@current ./router --config router-config.yaml
 ```
+
+Create subgraph
+
+```
+rover subgraph publish Airlock-Voyage-dxg8yk@current \
+    --schema ./subgraph-accounts/schema.graphql \
+    --name accounts \
+    --routing-url http://localhost:4002
+```
+
+```
+rover dev --supergraph-config ./router/supergraph-config.yaml \
+   --router-config ./router/router-config.yaml
+```
