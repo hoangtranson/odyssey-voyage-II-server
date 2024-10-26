@@ -51,3 +51,23 @@ Finally, let's run some local services.
 ## Getting Help
 
 For any issues or problems concerning the course content, please [refer to the Odyssey topic in our community forums](https://community.apollographql.com/tags/c/help/6/odyssey).
+
+# Note
+
+```
+rover subgraph publish Airlock-Voyage-dxg8yk@current \
+  --schema ./monolith/schema.graphql \
+  --name monolith \
+  --routing-url http://localhost:4001 \
+  --convert
+```
+
+The addition of the --convert flag at the end will tell Studio to convert the existing graph into a supergraph.
+
+```
+curl -sSL https://router.apollo.dev/download/nix/v1.46.0 | sh
+```
+
+```
+APOLLO_KEY=service:Airlock-Voyage-dxg8yk:emH5MPuGKpL7ZyJ-qnBaYA APOLLO_GRAPH_REF=Airlock-Voyage-dxg8yk@current ./router --config router-config.yaml
+```
